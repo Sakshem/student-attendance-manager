@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link th:href="@{/style.css}" rel="stylesheet"/>
+    <title>Student Directory</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <span style="color:white"><h1 class="heading">Student Directory</h1></span>
+    <!-- logout support -->
+    <form style="margin-right: 20px; margin-bottom: 15px;" action="#" th:action="@{/logout}"
+          method="POST">
+        <input type="submit" value="logout" class="btn btn-outline-primary mt-2"/>
+    </form>
+</nav>
+<div class="container">
+    <div class="box">
+        <strong>User: <i><span sec:authentication="name"></span></i> </strong>
+        <br>
+        <strong> Role(s): <i><span sec:authentication="principal.authorities"></span> </i> </strong>
+        <br>
+    </div>
+    <!-- Add a button to save employee -->
+    <br>
+<!--    <a th:href="@{/students/showFormForAdd}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Student
+    </a>
+
+    <form th:action="@{/students/list}">
+        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required/>
+        &nbsp;
+        <input type="submit" class="btn btn-dark" value="Search"/>
+    </form>
+    &nbsp;
+    <br>
+    <div class="row customShadow" th:each="tempStudent : ${students}">
+    <div class="card" style="width: 18rem;">
+      <img th:src="${tempStudent.imageUrl}" class="card-img-top" alt="...">
+
+        <div class="card-body">
+            <p class="card-text"><strong>First Name:</strong> <span th:text="${tempStudent.firstName}"></span></p>
+            <p class="card-text"><strong>Last Name:</strong> <span th:text="${tempStudent.lastName}"></span></p>
+            <p class="card-text"><strong>Class: </strong> <span th:text="${tempStudent.studentClass}"></span></p>
+            <p class="card-text"><strong>Section: </strong> <span th:text="${tempStudent.section}"></span></p>
+
+            <div id="block1" sec:authorize="hasAnyRole('ROLE_TEACER', 'ROLE_ADMIN')">
+                <a th:href="@{/students/showFormForUpdate(studentId=${tempStudent.studentId})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+            </div>
+            <div id="block2" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/students/delete(studentId=${tempStudent.studentId})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div> -->
+        <br>
+        <a th:href="@{/students-attendance/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3">
+            Add Student
+        </a>
+    <!-- new selector for date class and section -->
+        <form th:action="@{/students-attendance/list}">
+            Insert date: <input type="date" name="date" id="date2" size="50" th:value="${date}" required/>
+            &nbsp;
+            Insert Class: <input type="number" name="studentClass" id="studentClass" th:value="${studentClass}" required/>
+            &nbsp;
+            Insert Section: <input type="text" name="section" id="section" th:value="${section}" required/>
+            <input type="submit" class="btn btn-dark" value="Search"/>
+        </form>
+
+    <!-- adding search filter support -->
+<!--        <form th:action="@{/students-attendance/list}">
+            Filter: <input type="text" name="studentName" id="name" size="50" th:value="${fullName}" required/>
+            &nbsp;
+            <input type="submit" class="btn btn-dark" value="Search"/>
+        </form> -->
+        &nbsp;
+        <br>
+        <div class="row customShadow" th:each="tempStudent : ${studentsAttendance}">
+            <div class="card" style="width: 18rem;">
+                <!--        <img th:src="${tempStudent.imageUrl}" class="card-img-top" alt="..."> -->
+
+                <div class="card-body">
+                    <p class="card-text"><strong>Id: </strong> <span th:text="${tempStudent.id}"></span></p>
+                    <p class="card-text"><strong>Full Name: </strong> <span th:text="${tempStudent.fullName}"></span></p>
+                    <p class="card-text"><strong>Date: </strong> <span th:text="${tempStudent.date}"></span></p>
+                    <p class="card-text"><strong>Class: </strong> <span th:text="${tempStudent.studentClass}"></span></p>
+                    <p class="card-text"><strong>Section: </strong> <span th:text="${tempStudent.section}"></span></p>
+                    <p class="card-text"><strong>present: </strong> <span th:text="${tempStudent.present}"></span></p>
+
+                    <div id="block1" sec:authorize="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
+                        <a th:href="@{/students-attendance/showFormForUpdate(id=${tempStudent.id})}"
+                           class="btn btn-info btn-sm">
+                            Update
+                        </a>
+                    </div>
+                    <div id="block2" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/students-attendance/delete(id=${tempStudent.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="if (!(confirm('Are you sure you want to delete this student and its attendance?'))) return false">
+                           Delete
+                        </a>
+                    </div>
+                     <div id="block3" sec:authorize="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
+                         <a th:href="@{/students-attendance/mark-attendance(id=${tempStudent.id}, date=${tempStudent.date}, present=${true}, studentClass=${tempStudent.studentClass}, section=${tempStudent.section})}"
+                            class="btn btn-outline-success btn-sm">
+                            Present
+                         </a>
+                         <a th:href="@{/students-attendance/mark-attendance(id=${tempStudent.id}, date=${tempStudent.date}, present=${false}, studentClass=${tempStudent.studentClass}, section=${tempStudent.section})}"
+                            class="btn btn-outline-danger btn-sm">
+                             Absent
+                         </a>
+                        <!-- <button type="button" class="btn btn-outline-success">Present</button>
+                        <button type="button" class="btn btn-outline-danger">Absent</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
