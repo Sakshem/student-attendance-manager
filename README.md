@@ -1,9 +1,11 @@
 # Student-Attendance-Manager
-* Built a Web Spring-boot Application that tracks student attendance. Allows teachers to record the attendance for a new day, view and update a student's past attendance by simplifying the User Interface
-* Performs all the CRUD operations on the students records and stores it in a MySQL database
-* Added Spring Security with JDBC authentication and deployed 3 different roles Student, Teacher and Admin with different capabilities
-* Automated generation of student attendance records for each new date when selected through the filter
-* Used Thymeleaf for the dynamic content of the web and HTML5, CSS for the static content of the web
+* Built a Web Spring-boot Application that tracks student attendance through an intuitive UI where teachers can record attendance
+for a new day and view/update past attendance records
+* Incorporated CRUD operations to store student records in MySQL database with automatic generation of student attendance
+records for new dates
+* Added Spring Security with JDBC authentication which resulted in 3 roles, each with different access levels
+* Used Thymeleaf for the dynamic and HTML5, CSS and Bootstrap for the static content of the web
+
 
 ### Here's how this project looks like -
 ![image](https://user-images.githubusercontent.com/61968230/166402894-7495652c-2b29-4cb9-8c50-f1d02b1c58af.png)
